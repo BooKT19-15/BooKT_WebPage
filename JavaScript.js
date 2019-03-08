@@ -81,7 +81,7 @@ function loginPage(){
 // BUILD SIGNUP PAGE
 function signupPage(){
 	$(".container").css("-webkit-animation", "fadeout 2s");
-	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="text" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" class = "buttons" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
+	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" class = "buttons" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
 	$(".main_body").append(home_page);
 	$(".main_body").css("height", "1500px");
 	$(".image").width($(window).width());
@@ -118,6 +118,12 @@ function storeAndProceed(){
         }, 500);
 
 	} else {
+
+		if(hasNumber($("input[name=first_name]").val()) == -1 &&
+			hasNumber($("input[name=last_name]").val()) == -1 &&
+			hasNumber($("input[name=restaurant_name]").val()) == -1 &&
+			hasNumber($("input[name=restaurant_country]").val()) == -1 &&
+			hasNumber($("input[name=restaurant_city]").val()) == -1){
 
 		pageCounter = 2;
 
@@ -236,6 +242,11 @@ function storeAndProceed(){
 			}
 
 		}
+	}else{
+
+		alert("Some fields only accept letters. Others only accept numbers.");
+
+	}
 
 	}
 }
@@ -313,6 +324,8 @@ function processRegistration(){
 
 			$(".submitButton").unbind().click(function(){
 
+				// DO LOGIC HERE
+
 				if(pageTwo[5] == "Single"){
 			
 					if(files.length == 0){
@@ -334,6 +347,9 @@ function processRegistration(){
 						$(".image").width($(window).width());
 
 						pageCounter = 4;
+
+						// CHECK HERE FOR MENU STRUCTURE LOGIC
+						console.log(categoryMenu);
 
 					}
 
@@ -403,42 +419,44 @@ function processRegistration(){
 			$(".card").css("min-width", "1200px");
 
 			$(".submitButton").unbind().click(function(){
+
+				// DO LOGIC HERE
 			
-			if(files.length == 0){
+				if(files.length == 0){
 
-				alert("Please provide images");
+					alert("Please provide images");
 
-			}else if(seatValuesSingle.length == 0 || seatValuesFamily.length == 0){
+				}else if(seatValuesSingle.length == 0 || seatValuesFamily.length == 0){
 
-				alert("Please provide tables");
+					alert("Please provide tables");
 
-			}else{
+				}else{
 
-				$(".card").remove();
-				$(".page_header").remove();
+					$(".card").remove();
+					$(".page_header").remove();
 
-				var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
-				$(".main_body").append(login_page);
-				$(".main_body").css("height", "auto");
-				$(".image").width($(window).width());
+					var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
+					$(".main_body").append(login_page);
+					$(".main_body").css("height", "auto");
+					$(".image").width($(window).width());
 
-				pageCounter = 4;
+					pageCounter = 4;
 
-			}
+				}
 
 			});
 
-				// RE-ASSIGN TABLE VALUES
-				for(i = 0; i < tableCounterSingle; i++){
-					$(".columnsSingle").append("<th> T"+(i+1)+"</th>");
-					$(".rowsSingle").append("<td>"+seatValuesSingle[i]+"</td>")
-				}
+			// RE-ASSIGN TABLE VALUES
+			for(i = 0; i < tableCounterSingle; i++){
+				$(".columnsSingle").append("<th> T"+(i+1)+"</th>");
+				$(".rowsSingle").append("<td>"+seatValuesSingle[i]+"</td>")
+			}
 
-				// RE-ASSIGN TABLE VALUES
-				for(i = 0; i < tableCounterFamily; i++){
-					$(".columnsFamily").append("<th> T"+(i+1)+"</th>");
-					$(".rowsFamily").append("<td>"+seatValuesFamily[i]+"</td>")
-				}
+			// RE-ASSIGN TABLE VALUES
+			for(i = 0; i < tableCounterFamily; i++){
+				$(".columnsFamily").append("<th> T"+(i+1)+"</th>");
+				$(".rowsFamily").append("<td>"+seatValuesFamily[i]+"</td>")
+			}
 
 		}
 
@@ -481,7 +499,7 @@ function goBack(){
 		$(".card_fields").remove();
 		$(".buttons").remove();
 
-		var home_page = '<div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br><input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="text" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
+		var home_page = '<div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br><input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
 		$(".card").append(home_page);
 
 		$(".main_body").css("height", "1500px");
@@ -516,113 +534,130 @@ function goBack(){
 // GO BACK FROM PAGE THREE
 	}else if(pageCounter == 3){
 
-		files = [];
+		try {
 
-		pageCounter = 2;
-		menuCategoryCounter = 0;
+		let state = prompt("Files and Menu items will not be saved if you go back. You will have to input them again from scratch. Type Y if you want to go back.");
 
-		$(".card_fields").remove();
-		$(".buttons").remove();
+		if(state.toLowerCase() == "y" || state.toLowerCase() == "yes" || state.toLowerCase() == "ye"){
 
-		var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br><select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <input class = "text_fields" type="text" name="cuisine" placeholder="..."><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><input class = "text_fields" type="text" name="price_range" placeholder="..."><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="open_hour" placeholder="..."><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="close_hour" placeholder="..."><label class = "label" for="input[name=family]">Sections</label> <br> <input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "buttons" style="display: flex;"><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
+			categoryMenu = [];
 
-		$(".card").prepend(continue_page);
+			files = [];
 
-		setPriceRangeListener();
+			pageCounter = 2;
+			menuCategoryCounter = 0;
 
-		$(".main_body").css("height", "1100px");
-		$(".card").css("width", "750px");
-		$(".card").css("left", "50%");
-		$(".card").css("margin-left", "-375px");
-		$(".card").css("max-width", "750px");
-		$(".card").css("min-width", "750px");
+			$(".card_fields").remove();
+			$(".buttons").remove();
 
-		$(".submitButton").css("position", "absolute");
-		$(".submitButton").css("right", "50px");
+			var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br><select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <input class = "text_fields" type="text" name="cuisine" placeholder="..."><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><input class = "text_fields" type="text" name="price_range" placeholder="..."><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="open_hour" placeholder="..."><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="close_hour" placeholder="..."><label class = "label" for="input[name=family]">Sections</label> <br> <input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "buttons" style="display: flex;"><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
 
-		$(".submitButton").removeAttr("onclick");
-		$(".submitButton").attr("onclick", "processRegistration()")
+			$(".card").prepend(continue_page);
 
-		$(".text_fields").unbind().keypress(function(e){
-			if(e.which == 13){
-				processRegistration();
-			}
-		});
+			setPriceRangeListener();
 
-		$(".seat_field").unbind().keypress(function(e){
-			if(e.which == 13){
-				processRegistration();
-			}
-		});
+			$(".main_body").css("height", "1100px");
+			$(".card").css("width", "750px");
+			$(".card").css("left", "50%");
+			$(".card").css("margin-left", "-375px");
+			$(".card").css("max-width", "750px");
+			$(".card").css("min-width", "750px");
 
-		if(pageTwo[0] != null){
+			$(".submitButton").css("position", "absolute");
+			$(".submitButton").css("right", "50px");
 
-			$("input[name=cuisine]").val(pageTwo[0]);
-			$("input[name=price_range]").val(pageTwo[1]);
-			$("input[name=restaurant_phone_number]").val(pageTwo[2]);
+			$(".submitButton").removeAttr("onclick");
+			$(".submitButton").attr("onclick", "processRegistration()")
 
-			$("input[name=open_hour]").val(pageTwo[3]);
+			$(".text_fields").unbind().keypress(function(e){
+				if(e.which == 13){
+					processRegistration();
+				}
+			});
 
-			if(pageTwo[1] == "cheap"){
+			$(".seat_field").unbind().keypress(function(e){
+				if(e.which == 13){
+					processRegistration();
+				}
+			});
 
-				$(".price_range_list #1").css("color", "#EB2748");
+			if(pageTwo[0] != null){
 
-			}else if(pageTwo[1] == "semi-moderate"){
+				$("input[name=cuisine]").val(pageTwo[0]);
+				$("input[name=price_range]").val(pageTwo[1]);
+				$("input[name=restaurant_phone_number]").val(pageTwo[2]);
 
-				$(".price_range_list #1").css("color", "#EB2748");
-				$(".price_range_list #2").css("color", "#EB2748");
+				$("input[name=open_hour]").val(pageTwo[3]);
 
-			}else if(pageTwo[1] == "moderate"){
+				if(pageTwo[1] == "cheap"){
 
-				$(".price_range_list #1").css("color", "#EB2748");
-				$(".price_range_list #2").css("color", "#EB2748");
-				$(".price_range_list #3").css("color", "#EB2748");
+					$(".price_range_list #1").css("color", "#EB2748");
 
-			}else if(pageTwo[1] == "semi-expensive"){
+				}else if(pageTwo[1] == "semi-moderate"){
 
-				$(".price_range_list #1").css("color", "#EB2748");
-				$(".price_range_list #2").css("color", "#EB2748");
-				$(".price_range_list #3").css("color", "#EB2748");
-				$(".price_range_list #4").css("color", "#EB2748");
+					$(".price_range_list #1").css("color", "#EB2748");
+					$(".price_range_list #2").css("color", "#EB2748");
 
-			}else if(pageTwo[1] == "expensive"){
+				}else if(pageTwo[1] == "moderate"){
 
-				$(".price_range_list #1").css("color", "#EB2748");
-				$(".price_range_list #2").css("color", "#EB2748");
-				$(".price_range_list #3").css("color", "#EB2748");
-				$(".price_range_list #4").css("color", "#EB2748");
-				$(".price_range_list #5").css("color", "#EB2748");
+					$(".price_range_list #1").css("color", "#EB2748");
+					$(".price_range_list #2").css("color", "#EB2748");
+					$(".price_range_list #3").css("color", "#EB2748");
 
-			}else{
+				}else if(pageTwo[1] == "semi-expensive"){
 
-				// DO NOTHING
+					$(".price_range_list #1").css("color", "#EB2748");
+					$(".price_range_list #2").css("color", "#EB2748");
+					$(".price_range_list #3").css("color", "#EB2748");
+					$(".price_range_list #4").css("color", "#EB2748");
 
-			}
+				}else if(pageTwo[1] == "expensive"){
 
-			$("input[name=close_hour]").val(pageTwo[4]);
-			$("input[name=sections]").val(pageTwo[5]);
+					$(".price_range_list #1").css("color", "#EB2748");
+					$(".price_range_list #2").css("color", "#EB2748");
+					$(".price_range_list #3").css("color", "#EB2748");
+					$(".price_range_list #4").css("color", "#EB2748");
+					$(".price_range_list #5").css("color", "#EB2748");
 
-			if(pageTwo[5] == "Family"){
+				}else{
 
-				$("input:checkbox[name=family]").prop("checked", true);
+					// DO NOTHING
 
-			}else if(pageTwo[5] == "Single"){
+				}
 
-				$("input:checkbox[name=single]").prop("checked", true);
+				$("input[name=close_hour]").val(pageTwo[4]);
+				$("input[name=sections]").val(pageTwo[5]);
 
-			}else if(pageTwo[5] == "Single + Family"){
+				if(pageTwo[5] == "Family"){
 
-				$("input:checkbox[name=single]").prop("checked", true);
-				$("input:checkbox[name=family]").prop("checked", true);
+					$("input:checkbox[name=family]").prop("checked", true);
 
-			}else{
+				}else if(pageTwo[5] == "Single"){
 
-				// DO NOTHING
+					$("input:checkbox[name=single]").prop("checked", true);
 
-			}
+				}else if(pageTwo[5] == "Single + Family"){
+
+					$("input:checkbox[name=single]").prop("checked", true);
+					$("input:checkbox[name=family]").prop("checked", true);
+
+				}else{
+
+					// DO NOTHING
+
+				}
+
+			}	
+
+		}else{
+
+			// DO NOTHING
 
 		}
 
+		}catch(err){
+			// DO NOTHING
+		}
 
 	}else if(pageCounter == 1){	
 
@@ -749,9 +784,9 @@ function addColumnAndRowSingle(){
 
 	// -------------------------------------------------------------------------------------	
 
-		if(seatNumberSingle == null){
+		if(seatNumberSingle == null || hasString(String(seatNumberSingle)) == 0){
 
-			// DO NOTHING
+			alert("Please provide numbers only");
 
 		}else{
 
@@ -763,7 +798,7 @@ function addColumnAndRowSingle(){
 
 			}else{
 
-				if(tableCountSingle != null){
+				if(tableCountSingle != null && hasString(String(tableCountSingle)) != 0){
 
 					for(i = 0; i < tableCountSingle; i++){
 						tableCounterSingle++;
@@ -771,6 +806,10 @@ function addColumnAndRowSingle(){
 						$(".rowsSingle").append("<td>" + seatNumberSingle + "</td>");
 						seatValuesSingle.push(seatNumberSingle);
 					}
+
+				}else{
+
+					alert("Please provide only numbers");
 
 				}
 			}
@@ -795,9 +834,9 @@ function addColumnAndRowFamily(){
 
 	// -------------------------------------------------------------------------------------	
 
-		if(seatNumberFamily == null){
+		if(seatNumberFamily == null || hasString(String(seatNumberFamily)) == 0){
 
-			// DO NOTHING
+			alert("Please provide only numbers");
 
 		}else{
 
@@ -809,7 +848,7 @@ function addColumnAndRowFamily(){
 
 			}else{
 
-				if(tableCountFamily != null){
+				if(tableCountFamily != null && hasString(String(tableCountFamily)) != 0){
 
 					for(i = 0; i < tableCountFamily; i++){
 						tableCounterFamily++;
@@ -817,6 +856,10 @@ function addColumnAndRowFamily(){
 						$(".rowsFamily").append("<td>" + seatNumberFamily + "</td>");
 						seatValuesFamily.push(seatNumberFamily);
 					}
+
+				}else{
+
+					alert("Please provide only numbers");
 
 				}
 			}
@@ -838,12 +881,20 @@ function addColumnAndRowMenu(){
 
 		while(categoryName = prompt("Input menu categories. Cancel when finished. ", "")){
 
-			menuCategoryCounter++;
+			if(hasNumber(categoryName) == -1){
 
-			$(".columnsMenu").append('<th id="column' + menuCategoryCounter +'" onclick="insertMenuItems('+ String(menuCategoryCounter) +')">' + categoryName + '</th>');
-			$(".rowsMenu").append('<td id="cell' + menuCategoryCounter + '"></td>');
+				menuCategoryCounter++;
 
-			categoryMenu.push(new MenuCategory(categoryName, []));
+				$(".columnsMenu").append('<th id="column' + menuCategoryCounter +'" onclick="insertMenuItems('+ String(menuCategoryCounter) +')">' + categoryName + '</th>');
+				$(".rowsMenu").append('<td id="cell' + menuCategoryCounter + '"></td>');
+
+				categoryMenu.push(new MenuCategory(categoryName, []));
+
+			}else{
+
+				alert("Please provide only letters");
+
+			}
 
 		}
 
@@ -859,6 +910,9 @@ function insertMenuItems(menuCategoryCounter){
 	var i = 0;
 
 	$(".add").unbind().click(function(){
+
+		if(($("input[name=food_name]").val() != "" && $("input[name=food_description]").val() != "" && $("input[name=food_price]").val() != "") && 
+			(hasNumber($("input[name=food_name]").val()) == -1 && hasNumber($("input[name=food_description]").val()) == -1 && hasString(String($("input[name=food_price]").val())) != 0)){
 		
 		// IF THIS IS NOT THE FIRST ATTEMPT TO ADD (INSERT FUNCTION CALLED REPETITIVELY)
 		if(i >= 1){
@@ -873,7 +927,8 @@ function insertMenuItems(menuCategoryCounter){
 					if(document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1].textContent == ""){
 						var x = document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1];	
 						fullFlag = false;
-						x.innerHTML = "CONTENT";
+						x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
+						categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
 						break;
 					}
 				}
@@ -892,7 +947,8 @@ function insertMenuItems(menuCategoryCounter){
 
 					// FILL THE CELLS
 					var x = document.getElementById("menuTable").rows[$(".tgMenu").find(".rowsMenu").length].cells[menuCategoryCounter-1];	
-					x.innerHTML = "CONTENT";
+					x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
+					categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
 
 				}
 
@@ -914,7 +970,8 @@ function insertMenuItems(menuCategoryCounter){
 
 				// INSERT INFO INTO CELLS
 				var x = document.getElementById("menuTable").rows[i+1].cells[menuCategoryCounter-1];	
-				x.innerHTML = "CONTENT";
+				x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
+				categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
 
 			}
 
@@ -928,7 +985,8 @@ function insertMenuItems(menuCategoryCounter){
 				if(document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1].textContent == ""){
 					var x = document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1];	
 					fullFlag = false;
-					x.innerHTML = "CONTENT";
+					x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
+					categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
 					break;
 				}
 			}
@@ -948,7 +1006,8 @@ function insertMenuItems(menuCategoryCounter){
 
 				// FILL THE CELLS
 				var x = document.getElementById("menuTable").rows[$(".tgMenu").find(".rowsMenu").length].cells[menuCategoryCounter-1];	
-				x.innerHTML = "CONTENT";
+				x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
+				categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
 
 			}
 
@@ -958,6 +1017,12 @@ function insertMenuItems(menuCategoryCounter){
 		$("input[name=food_description]").val("");
 		$("input[name=food_price]").val("");
 		i++;
+
+	}else{
+
+		alert("Food name and description only accepts letters. Food price only takes in numbers");
+
+	}
 
 	});
 
@@ -1025,4 +1090,22 @@ function readFiles(){
 // SET CUISINE TEXT
 function setTextCuisine(){
 	$("input[name=cuisine]").val($(".cuisine_select").find(":selected").text());
+}
+
+// CHECK FOR NUMBERS IN STRING
+function hasNumber(myString){
+	var regex = /[^a-zA-Z]/;
+	return myString.search(regex);
+}
+
+// CHECK FOR STRING IN NUMBER
+function hasString(myString){
+	var regex = /[^0-9]/;
+	var result1 = myString.search(regex);
+
+	if(result1 == 0){
+		return 0;
+	}else{
+		return -1;
+	}
 }

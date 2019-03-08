@@ -7,13 +7,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="JavaScript.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js" ></script>
+  <script>
+  //with jQuery
+$(document).ready(function() {
+  $(window).on('resize', function(){
+    if(screen.width === window.innerWidth){
+      $(".main_image").width($(window).width());
+    }else{
+      $(".main_image").width($(window).width());
+    }
+  });
+});
+</script>
 </head>
 <body class="main_body" onload="animateEntry()">
   <div id="myModal" class="modal">
   <div class="modal-content"> Menu Items Information: <br> <br> <br>
   	Food Name: <input type="text" name="food_name"> <br> <br>
-  	Food Name: <input type="text" name="food_description"> <br> <br>
-  	Food Name: <input type="text" name="food_price"> <br> <br> <br>
+  	Food Description: <input type="text" name="food_description"> <br> <br>
+  	Food Price: <input type="number" name="food_price"> <br> <br> <br>
     <button class="add"> Add Item </button>
   </div>
   </div>
