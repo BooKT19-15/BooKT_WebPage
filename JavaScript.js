@@ -5,8 +5,6 @@ var tableCounterFamily = 0;
 var pageCounter = 0;
 var files = [];
 var menuCategoryCounter = 0;
-var c1 = 0;
-var c2 = 0;
 
 var pageOne = [null, null, null, null, null, null, null, null, null, null];
 var pageTwo = [null, null, null, null, null, null];
@@ -14,6 +12,49 @@ var seatValuesSingle = [];
 var seatValuesFamily = [];
 var categoryMenu = [];
 
+var tableListS = [];
+var tableListF = [];
+
+
+class Person{
+	constructor(first_name, last_name, mobile_number, email){
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.mobile_number = mobile_number;
+		this.email = email;
+	}
+}
+
+class Restaurant{
+	constructor(person, restaurant_name, restaurant_country, restaurant_city,
+	 restaurant_zip, restaurant_location, restaurant_cuisine, restaurant_price,
+	  restaurant_telephone, restaurant_open, restaurant_close, sections, tableListSingle, 
+	  tableListFamily, menuItems, imageList){
+	   	this.person = person;
+	   	this.restaurant_name = restaurant_name;
+	   	this.restaurant_country = restaurant_country;
+	   	this.restaurant_city = restaurant_city;
+	   	this.restaurant_zip = restaurant_zip;
+	   	this.restaurant_location = restaurant_location;
+	   	this.restaurant_cuisine = restaurant_cuisine;
+	   	this.restaurant_price = restaurant_price;
+	   	this.restaurant_telephone = restaurant_telephone;
+	   	this.restaurant_open = restaurant_open;
+	   	this.restaurant_close = restaurant_close;
+	   	this.sections = sections;
+	   	this.tableListSingle = tableListSingle;
+	   	this.tableListFamily = tableListFamily;
+	   	this.menuItems = menuItems;
+	   	this.imageList = imageList;
+	}
+}
+
+class Tables{
+	constructor(tableCount, seatCount){
+		this.tableCount = tableCount;
+		this.seatCount = seatCount;
+	}
+}
 
 class MenuCategory {
   constructor(menuCategory, menuItems) {
@@ -53,11 +94,10 @@ function animateEntry(){
 
 // BUILD INTRO PAGE (PORTAL)
 function buildPage(){
-	var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" onclick="signupPage()"> Signup </button></div></div>';
+	var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
 	$(".main_body").append(portal_page);
 	$(".main_body").css("height", "auto");
 	$(".image").width($(window).width());
-
 }
 
 // BUILD LOGIN PAGE
@@ -81,7 +121,7 @@ function loginPage(){
 // BUILD SIGNUP PAGE
 function signupPage(){
 	$(".container").css("-webkit-animation", "fadeout 2s");
-	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" class = "buttons" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
+	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div><div class ="submission" class = "buttons" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
 	$(".main_body").append(home_page);
 	$(".main_body").css("height", "1500px");
 	$(".image").width($(window).width());
@@ -341,15 +381,27 @@ function processRegistration(){
 						$(".card").remove();
 						$(".page_header").remove();
 
-						var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
-						$(".main_body").append(login_page);
+						var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
+						$(".main_body").append(portal_page);
 						$(".main_body").css("height", "auto");
 						$(".image").width($(window).width());
 
-						pageCounter = 4;
+						pageCounter = 0;
 
 						// CHECK HERE FOR MENU STRUCTURE LOGIC
 						console.log(categoryMenu);
+
+						var counter = 0;
+
+						var timer = setInterval(function(){
+							counter++;
+							if(counter == 2){
+								firebaseRecordsUpload();
+								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
+								clearInterval(timer);
+								deleteRecords();
+							}
+						}, 1000);
 
 					}
 
@@ -365,15 +417,29 @@ function processRegistration(){
 
 					}else{
 
+						// EDIT HERE
+
 						$(".card").remove();
 						$(".page_header").remove();
 
-						var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
-						$(".main_body").append(login_page);
+						var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
+						$(".main_body").append(portal_page);
 						$(".main_body").css("height", "auto");
 						$(".image").width($(window).width());
 
-						pageCounter = 4;
+						pageCounter = 0;
+
+						var counter = 0;
+
+						var timer = setInterval(function(){
+							counter++;
+							if(counter == 2){
+								firebaseRecordsUpload();
+								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
+								clearInterval(timer);
+								deleteRecords();
+							}
+						}, 1000);
 
 					}
 				}
@@ -432,15 +498,29 @@ function processRegistration(){
 
 				}else{
 
+					// EDIT HERE
+
 					$(".card").remove();
 					$(".page_header").remove();
 
-					var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
-					$(".main_body").append(login_page);
+					var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
+					$(".main_body").append(portal_page);
 					$(".main_body").css("height", "auto");
 					$(".image").width($(window).width());
 
-					pageCounter = 4;
+					pageCounter = 0;
+
+					var counter = 0;
+
+						var timer = setInterval(function(){
+							counter++;
+							if(counter == 2){
+								firebaseRecordsUpload();
+								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
+								clearInterval(timer);
+								deleteRecords();
+							}
+						}, 1000);
 
 				}
 
@@ -499,7 +579,7 @@ function goBack(){
 		$(".card_fields").remove();
 		$(".buttons").remove();
 
-		var home_page = '<div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br><input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..."></div></div><div class ="submission" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
+		var home_page = '<div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br><input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div><div class ="submission" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
 		$(".card").append(home_page);
 
 		$(".main_body").css("height", "1500px");
@@ -800,6 +880,8 @@ function addColumnAndRowSingle(){
 
 				if(tableCountSingle != null && hasString(String(tableCountSingle)) != 0){
 
+					tableListS.push(new Tables(tableCountSingle, seatNumberSingle));
+
 					for(i = 0; i < tableCountSingle; i++){
 						tableCounterSingle++;
 						$(".columnsSingle").append("<th> T" + (tableCounterSingle) + " </th>");
@@ -847,6 +929,8 @@ function addColumnAndRowFamily(){
 				alert("Maximum capacity is 35");
 
 			}else{
+
+				tableListF.push(new Tables(tableCountFamily, seatNumberFamily));
 
 				if(tableCountFamily != null && hasString(String(tableCountFamily)) != 0){
 
@@ -1052,8 +1136,6 @@ function deleteRecords(){
 	pageCounter = 0;
 	files = [];
 	menuCategoryCounter = 0;
-	c1 = 0;
-	c2 = 0;
 
 	pageOne = [null, null, null, null, null, null, null, null, null, null];
 	pageTwo = [null, null, null, null, null, null];
@@ -1068,11 +1150,9 @@ function accountLogin(){
 
 	if($("input[name=email_address]").val() != "" && $("input[name=password]").val() != ""){
 
-		// DO FIREBASE
+		// DO FIREBASE AUTHENTICATION
 
-		deleteRecords();
-
-		alert("DO FIREBASE. RECORDS DELETED");
+		alert("Login is not implemented yet.");
 	}
 }
 
@@ -1094,7 +1174,7 @@ function setTextCuisine(){
 
 // CHECK FOR NUMBERS IN STRING
 function hasNumber(myString){
-	var regex = /[^a-zA-Z]/;
+	var regex = /[^a-zA-Z\s]/;
 	return myString.search(regex);
 }
 
@@ -1108,4 +1188,29 @@ function hasString(myString){
 	}else{
 		return -1;
 	}
+}
+
+// FUNCTION TO ALERT ON LOCATION INPUT FOCUS
+function alertBox(){
+	alert("To enter your location, please do the following:\n\n1) Go to Google Maps and pin a location\n\n2) Click on the coordinates that popped up on the bottom of the screen, the marker will turn red.\n\n3) Now, copy the URL (search tab text) and paste it into the location field.");
+	$("input[name=location]").removeAttr("onfocus");
+}
+
+// UPLOAD REGISTRATION TO FIREBASE
+function firebaseRecordsUpload(){
+
+	const person = new Person(pageOne[0], pageOne[1], pageOne[2], pageOne[3]);
+
+	const restaurant = new Restaurant(person, pageOne[5], pageOne[6], pageOne[7],
+ 		pageOne[8], pageOne[9], pageTwo[0], pageTwo[1], pageTwo[2], pageTwo[3], pageTwo[4], pageTwo[5],
+ 		tableListS, tableListF, categoryMenu, files);
+
+	// //read value change and automatically change it in HTML
+	// var test = document.getElementById("test");
+ 	// var dbRef = firebase.database().ref().child('text');
+ 	// dbRef.on('value', snap => test.textContent = snap.val());
+
+ 	// write values to database
+ 	firebase.database().ref().child('QueueList').push(restaurant);
+
 }
