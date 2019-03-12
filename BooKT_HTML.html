@@ -20,7 +20,30 @@
   	});
 	});
   </script>
+  <!-- SCRIPT TO CALL INSERT MENU ITEMS FOR MODAL INPUTS -->
+  <script>
+  	$(document).ready(function(){
+  		$("input[name=food_name]").keypress(function(e){
+  			if(e.which == 13){
+  				modalInsert();
+  			}
+  		});
 
+  		$("input[name=food_description]").keypress(function(e){
+  			if(e.which == 13){
+  				modalInsert();
+  			}
+  		});
+
+  		$("input[name=food_price]").keypress(function(e){
+  			if(e.which == 13){
+  				modalInsert();
+  			}
+  		});
+  	})
+
+
+  </script>
   <!-- FIREBASE INITIALIZATION SCRIPT -->
   <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
   <script>
@@ -35,14 +58,16 @@
   	};
   	firebase.initializeApp(config);
   </script>
-  
+
 </head>
 <body class="main_body" onload="animateEntry()">
+	<div class="lds-dual-ring"></div>
   <div id="myModal" class="modal">
   <div class="modal-content"> Menu Items Information: <br> <br> <br>
   	Food Name: <input type="text" name="food_name"> <br> <br>
   	Food Description: <input type="text" name="food_description"> <br> <br>
   	Food Price: <input type="number" name="food_price"> <br> <br> <br>
+  	<input class ="local_explorer" id="menu_image" type="file" name="menu_image_explorer"> <br> <br> <br>
     <button class="add"> Add Item </button>
   </div>
   </div>

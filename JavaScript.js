@@ -14,6 +14,7 @@ var categoryMenu = [];
 
 var tableListS = [];
 var tableListF = [];
+var imageUrls = [];
 
 
 class Person{
@@ -64,10 +65,12 @@ class MenuCategory {
 }
 
 class MenuItem {
-	constructor(name, price, description){
+	constructor(name, price, description, image, file){
 		this.name = name;
 		this.price = price;
 		this.description = description;
+		this.image = image;
+		this.file = file;
 	}
 }
 
@@ -387,9 +390,10 @@ function processRegistration(){
 						$(".image").width($(window).width());
 
 						pageCounter = 0;
+						showWait();
 
 						// CHECK HERE FOR MENU STRUCTURE LOGIC
-						console.log(categoryMenu);
+						// console.log(categoryMenu);
 
 						var counter = 0;
 
@@ -397,7 +401,6 @@ function processRegistration(){
 							counter++;
 							if(counter == 2){
 								firebaseRecordsUpload();
-								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
 								clearInterval(timer);
 								deleteRecords();
 							}
@@ -428,6 +431,7 @@ function processRegistration(){
 						$(".image").width($(window).width());
 
 						pageCounter = 0;
+						showWait();
 
 						var counter = 0;
 
@@ -435,7 +439,6 @@ function processRegistration(){
 							counter++;
 							if(counter == 2){
 								firebaseRecordsUpload();
-								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
 								clearInterval(timer);
 								deleteRecords();
 							}
@@ -509,6 +512,7 @@ function processRegistration(){
 					$(".image").width($(window).width());
 
 					pageCounter = 0;
+					showWait();
 
 					var counter = 0;
 
@@ -516,7 +520,6 @@ function processRegistration(){
 							counter++;
 							if(counter == 2){
 								firebaseRecordsUpload();
-								alert("Please wait for confirmation email. An email will be sent to the email you registered with.");
 								clearInterval(timer);
 								deleteRecords();
 							}
@@ -995,6 +998,9 @@ function insertMenuItems(menuCategoryCounter){
 
 	$(".add").unbind().click(function(){
 
+		var menuImage = $('input[name=menu_image_explorer]').prop('files')[0];
+		//console.log(menuImage);
+
 		if(($("input[name=food_name]").val() != "" && $("input[name=food_description]").val() != "" && $("input[name=food_price]").val() != "") && 
 			(hasNumber($("input[name=food_name]").val()) == -1 && hasNumber($("input[name=food_description]").val()) == -1 && hasString(String($("input[name=food_price]").val())) != 0)){
 		
@@ -1012,7 +1018,7 @@ function insertMenuItems(menuCategoryCounter){
 						var x = document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1];	
 						fullFlag = false;
 						x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
-						categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
+						categoryMenu[menuCategoryCounter-1].menuItems[j] = new MenuItem($("input[name=food_name]").val(), $("input[name=food_price]").val(), $("input[name=food_description]").val(), "", menuImage);
 						break;
 					}
 				}
@@ -1032,7 +1038,7 @@ function insertMenuItems(menuCategoryCounter){
 					// FILL THE CELLS
 					var x = document.getElementById("menuTable").rows[$(".tgMenu").find(".rowsMenu").length].cells[menuCategoryCounter-1];	
 					x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
-					categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
+					categoryMenu[menuCategoryCounter-1].menuItems[j] = new MenuItem($("input[name=food_name]").val(), $("input[name=food_price]").val(), $("input[name=food_description]").val(), "", menuImage);
 
 				}
 
@@ -1055,7 +1061,7 @@ function insertMenuItems(menuCategoryCounter){
 				// INSERT INFO INTO CELLS
 				var x = document.getElementById("menuTable").rows[i+1].cells[menuCategoryCounter-1];	
 				x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
-				categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
+				categoryMenu[menuCategoryCounter-1].menuItems[j] = new MenuItem($("input[name=food_name]").val(), $("input[name=food_price]").val(), $("input[name=food_description]").val(), "", menuImage);
 
 			}
 
@@ -1070,7 +1076,7 @@ function insertMenuItems(menuCategoryCounter){
 					var x = document.getElementById("menuTable").rows[j+1].cells[menuCategoryCounter-1];	
 					fullFlag = false;
 					x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
-					categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
+					categoryMenu[menuCategoryCounter-1].menuItems[j] = new MenuItem($("input[name=food_name]").val(), $("input[name=food_price]").val(), $("input[name=food_description]").val(), "", menuImage);
 					break;
 				}
 			}
@@ -1091,7 +1097,7 @@ function insertMenuItems(menuCategoryCounter){
 				// FILL THE CELLS
 				var x = document.getElementById("menuTable").rows[$(".tgMenu").find(".rowsMenu").length].cells[menuCategoryCounter-1];	
 				x.innerHTML = $("input[name=food_name]").val() + "<br>" + $("input[name=food_price]").val();
-				categoryMenu[menuCategoryCounter-1].menuItems[j] = $("input[name=food_name]").val();
+				categoryMenu[menuCategoryCounter-1].menuItems[j] = new MenuItem($("input[name=food_name]").val(), $("input[name=food_price]").val(), $("input[name=food_description]").val(), "", menuImage);
 
 			}
 
@@ -1100,6 +1106,7 @@ function insertMenuItems(menuCategoryCounter){
 		$("input[name=food_name]").val("");
 		$("input[name=food_description]").val("");
 		$("input[name=food_price]").val("");
+		$("input[name=menu_image_explorer]").val("");
 		i++;
 
 	}else{
@@ -1159,12 +1166,6 @@ function accountLogin(){
 // READ LOCAL FILES
 function readFiles(){
 	files = document.getElementById("my-input").files;
-
-	for (var i = 0; i < files.length; i++){
-
- 		alert(files[i].name);
-
-	}
 }
 
 // SET CUISINE TEXT
@@ -1190,6 +1191,16 @@ function hasString(myString){
 	}
 }
 
+// START WAITING ANIMATION
+function showWait(){
+	$(".lds-dual-ring").css("display", "inline-block");
+}
+
+// CANCEL WAITING ANIMATION
+function cancelWait(){
+	$(".lds-dual-ring").css("display", "none");
+}
+
 // FUNCTION TO ALERT ON LOCATION INPUT FOCUS
 function alertBox(){
 	alert("To enter your location, please do the following:\n\n1) Go to Google Maps and pin a location\n\n2) Click on the coordinates that popped up on the bottom of the screen, the marker will turn red.\n\n3) Now, copy the URL (search tab text) and paste it into the location field.");
@@ -1199,18 +1210,86 @@ function alertBox(){
 // UPLOAD REGISTRATION TO FIREBASE
 function firebaseRecordsUpload(){
 
+	var filesList = [];
+
+	// STORING NAMES ONLY
+	for(i = 0; i < files.length; i++){
+		filesList.push(files[i].name);
+	}
+
 	const person = new Person(pageOne[0], pageOne[1], pageOne[2], pageOne[3]);
 
+	// USING IMAGE NAMES FOR THE RESTAURANT NODE IN FIREBASE
 	const restaurant = new Restaurant(person, pageOne[5], pageOne[6], pageOne[7],
  		pageOne[8], pageOne[9], pageTwo[0], pageTwo[1], pageTwo[2], pageTwo[3], pageTwo[4], pageTwo[5],
- 		tableListS, tableListF, categoryMenu, files);
-
-	// //read value change and automatically change it in HTML
-	// var test = document.getElementById("test");
- 	// var dbRef = firebase.database().ref().child('text');
- 	// dbRef.on('value', snap => test.textContent = snap.val());
+ 		tableListS, tableListF, categoryMenu, filesList);
 
  	// write values to database
- 	firebase.database().ref().child('QueueList').push(restaurant);
 
+ 	var key = "";
+ 	var databaseRef = firebase.database().ref().child('QueueList');
+
+	databaseRef.push(restaurant);
+
+	var taskDatabase = databaseRef.endAt().limitToLast(1).on('child_added', function(snapshot){
+		key = snapshot.key;
+	}, function(err){
+		alert("Registration Failed. Please check your internet connection.");
+	}
+	);
+ 	
+ 	// STORING GALLERY IMAGES BASED ON USER REGISTRATION KEY GENERATED ABOVE
+ 	for(j = 0; j < files.length; j++){
+
+ 		// THE IMAGES ARE STORED INTO A FOLDER WITH THE REGISTERED KEY
+		var storageRef = firebase.storage().ref(String(key)+'/galleryImages/'+files[j].name);
+  		var task = storageRef.put(files[j]);
+
+  		task.then(function(snapshot){
+  			snapshot.ref.getDownloadURL().then(function(downloadURL) {
+    			imageUrls.push(downloadURL);
+    			databaseRef.child(String(key)).child('imageList').set(imageUrls);
+  			});
+  		});
+  	}
+
+	// STORAGE OF MENU IMAGES BASED BASED ON CATEGORY AND MENU NUMBER
+  	for(i = 0; i < categoryMenu.length; i++){
+
+  		var list = categoryMenu[i].menuItems;
+
+  		for(j = 0; j < list.length; j++){
+
+  			var storageRef = firebase.storage().ref(String(key) + '/menuImages/' + String(i) + String(j) + "_" + list[j].file.name);
+  			var task = storageRef.put(list[j].file);
+
+  			task.then(function(snapshot){
+
+  				snapshot.ref.getDownloadURL().then(function(downloadURL){
+  					var startIndex = String(downloadURL).indexOf("_Screenshot")-2;
+  					var endIndex = startIndex + 1;
+
+  					// console.log(String(downloadURL).charAt(endIndex));
+  					// console.log(String(downloadURL).charAt(startIndex));
+
+  					databaseRef.child(String(key)).child('menuItems')
+  					.child(String(downloadURL).charAt(startIndex))
+  					.child('menuItems')
+  					.child(String(downloadURL).charAt(endIndex))
+  					.child("image")
+  					.set(String(downloadURL));
+
+  				});
+  			});
+  		}
+  	}
+  	imageUrls = [];
+
+  	var dbRef = firebase.database().ref().child('QueueList');
+  	dbRef.once('value', function(snapshot) {
+  	if (snapshot.hasChild(String(key))) {
+  		cancelWait();
+    	alert("Please wait for confirmation email. An email will be sent to the email you registered within a few days. You will not be able to login until then.");
+  	}
+	});
 }
