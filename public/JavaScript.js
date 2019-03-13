@@ -1260,13 +1260,13 @@ function firebaseRecordsUpload(){
 
   		for(j = 0; j < list.length; j++){
 
-  			var storageRef = firebase.storage().ref(String(key) + '/menuImages/' + String(i) + String(j) + "_" + list[j].file.name);
+  			var storageRef = firebase.storage().ref(String(key) + '/menuImages/' + String(i) + String(j) + "_MOA19" + list[j].file.name);
   			var task = storageRef.put(list[j].file);
 
   			task.then(function(snapshot){
 
   				snapshot.ref.getDownloadURL().then(function(downloadURL){
-  					var startIndex = String(downloadURL).indexOf("_Screenshot")-2;
+  					var startIndex = String(downloadURL).indexOf("_MOA19")-2;
   					var endIndex = startIndex + 1;
 
   					// console.log(String(downloadURL).charAt(endIndex));
