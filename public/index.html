@@ -20,48 +20,25 @@
   	});
 	});
   </script>
-  <!-- SCRIPT TO CALL INSERT MENU ITEMS FOR MODAL INPUTS -->
-  <script>
-  	$(document).ready(function(){
-  		$("input[name=food_name]").keypress(function(e){
-  			if(e.which == 13){
-  				modalInsert();
-  			}
-  		});
 
-  		$("input[name=food_description]").keypress(function(e){
-  			if(e.which == 13){
-  				modalInsert();
-  			}
-  		});
-
-  		$("input[name=food_price]").keypress(function(e){
-  			if(e.which == 13){
-  				modalInsert();
-  			}
-  		});
-  	})
-
-
-  </script>
-  <!-- FIREBASE INITIALIZATION SCRIPT -->
-  <script src="https://www.gstatic.com/firebasejs/5.8.6/firebase.js"></script>
-  <script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
   // Initialize Firebase
-  	var config = {
-    	apiKey: "AIzaSyBapKuYvnGqaSS-rBuMz7mNmE6buqjimJ8",
-    	authDomain: "bookt-a9889.firebaseapp.com",
-    	databaseURL: "https://bookt-a9889.firebaseio.com",
-    	projectId: "bookt-a9889",
-    	storageBucket: "bookt-a9889.appspot.com",
-    	messagingSenderId: "876916356023"
-  	};
-  	firebase.initializeApp(config);
-  </script>
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+    apiKey: "AIzaSyBapKuYvnGqaSS-rBuMz7mNmE6buqjimJ8",
+    authDomain: "bookt-a9889.firebaseapp.com.firebaseapp.com",
+    databaseURL: "https://bookt-a9889.firebaseio.com",
+    projectId: "bookt-a9889",
+    storageBucket: "bookt-a9889.appspot.com",
+    messagingSenderId: "876916356023",
+  };
+  firebase.initializeApp(config);
+</script>
+
 
 </head>
 <body class="main_body" onload="animateEntry()">
-	<div class="lds-dual-ring"></div>
   <div id="myModal" class="modal">
   <div class="modal-content"> Menu Items Information: <br> <br> <br>
   	Food Name: <input type="text" name="food_name"> <br> <br>

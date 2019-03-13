@@ -27,10 +27,11 @@ class Person{
 }
 
 class Restaurant{
-	constructor(person, restaurant_name, restaurant_country, restaurant_city,
+	constructor(firebase_id, person, restaurant_name, restaurant_country, restaurant_city,
 	 restaurant_zip, restaurant_location, restaurant_cuisine, restaurant_price,
 	  restaurant_telephone, restaurant_open, restaurant_close, sections, tableListSingle, 
 	  tableListFamily, menuItems, imageList){
+	  	this.firebase_id = firebase_id;
 	   	this.person = person;
 	   	this.restaurant_name = restaurant_name;
 	   	this.restaurant_country = restaurant_country;
@@ -108,7 +109,7 @@ function loginPage(){
 
 	$(".container").remove();
 
-	var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div>';
+	var login_page = '<div class="container"><div class="dummyDiv"><div class ="emailDiv"><input class = "login_fields" type="text" name="email_address" placeholder="Email Address"></div><div class="passwordDiv"><input class = "login_fields" type="password" name="password" placeholder="Password"></div><div class ="submission" style="display: inline-flex;"><button class ="accountLoginButton" onclick="accountLogin()"> Login </button><button class ="backButton" onclick="goBack()"> Back </button></div></div></div>';
 	$(".main_body").append(login_page);
 	$(".main_body").css("height", "auto");
 	$(".image").width($(window).width());
@@ -123,14 +124,17 @@ function loginPage(){
 
 // BUILD SIGNUP PAGE
 function signupPage(){
-	$(".container").css("-webkit-animation", "fadeout 2s");
-	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div><div class ="submission" class = "buttons" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
+	$(".container").remove()
+	var home_page = '<div class="container"><div class ="page_header"><div class ="page_message"><center><p class ="title"> Restaurant Registration Form </p></center><center><p class ="description"> Please fill out the following form and we\'ll contact you through email or phone once your submission has been reviewed. <br><br>For any inquiries, contact us at BooKT19.15@gmail.com</p></center></div></div><div class="card"><div class ="card_fields"><div class = "personal_info" align="left"><div><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."></div><div><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."></div><div><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."></div><div><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."></div><div><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div></div><div class = "restaurant_info" align="left"><div><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."></div><div><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div></div><div class ="submission"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div>';
 	$(".main_body").append(home_page);
 	$(".main_body").css("height", "1500px");
 	$(".image").width($(window).width());
 
-	$(".submitButton").css("position", "absolute");
-	$(".submitButton").css("right", "50px");
+	$("input[name=restaurant_country]").prop("value", "Saudi Arabia");
+	$("input[name=restaurant_city]").prop("value", "Jeddah");
+
+	$("input[name=restaurant_country]").prop("disabled", true);
+	$("input[name=restaurant_city]").prop("disabled", true);
 
 	$(".text_fields").unbind().keypress(function(e){
 		if(e.which == 13){
@@ -184,26 +188,21 @@ function storeAndProceed(){
 		$(".card_fields").remove();
 		$(".submission").remove();
 
-		var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br> <select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <input class = "text_fields" type="text" name="cuisine" placeholder="..."><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><input class = "text_fields" type="text" name="price_range" placeholder="..."><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="open_hour" placeholder="..."><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="close_hour" placeholder="..."><label class = "label" for="input[name=family]">Sections</label> <br> <input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "buttons" style="display: flex;"><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
-
+//<select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select>
+//<select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select>
+		var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br> <select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <div><input class = "text_fields" type="text" name="cuisine" placeholder="..."></div><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><div><input class = "text_fields" type="text" name="price_range" placeholder="..."></div><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <div><input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="zero">0</option><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option><option value="thirteen">13</option><option value="fourteen">14</option><option value="fifteen">15</option><option value="sixteen">16</option><option value="seventeen">17</option><option value="eighteen">18</option><option value="nineteen">19</option><option value="twenty">20</option><option value="twenty-one">21</option><option value="twenty-two">22</option><option value="twenty-three">23</option></select><div><input class = "text_fields" type="text" name="open_hour" placeholder="..."></div><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="zero">0</option><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option><option value="thirteen">13</option><option value="fourteen">14</option><option value="fifteen">15</option><option value="sixteen">16</option><option value="seventeen">17</option><option value="eighteen">18</option><option value="nineteen">19</option><option value="twenty">20</option><option value="twenty-one">21</option><option value="twenty-two">22</option><option value="twenty-three">23</option></select><div><input class = "text_fields" type="text" name="close_hour" placeholder="..."></div><label class = "label" for="input[name=family]">Sections</label> <br><input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "submission" ><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
+//<select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select>
+//<select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select>
 		$(".card").prepend(continue_page);
 
 		setPriceRangeListener();
 
 		$(".main_body").css("height", "1100px");
-		$(".card").css("width", "750px");
-		$(".card").css("left", "50%");
-		$(".card").css("margin-left", "-375px");
-		$(".card").css("max-width", "750px");
-		$(".card").css("min-width", "750px");
 
 		$("input[name=cuisine]").prop("disabled", true);
 		$("input[name=price_range]").prop("disabled", true);
 		$("input[name=open_hour]").prop("disabled", true);
 		$("input[name=close_hour]").prop("disabled", true);
-
-		$(".submitButton").css("position", "absolute");
-		$(".submitButton").css("right", "50px");
 
 		$(".submitButton").removeAttr("onclick");
 		$(".submitButton").attr("onclick", "processRegistration()")
@@ -324,7 +323,6 @@ function processRegistration(){
 
 		pageCounter = 3;
 
-
 		pageTwo[0] = String($("input[name=cuisine]").val());
 		pageTwo[1] = String($("input[name=price_range]").val());
 		pageTwo[2] = String($("input[name=restaurant_phone_number]").val());
@@ -354,16 +352,14 @@ function processRegistration(){
 
 		if(pageTwo[5] == "Single" || pageTwo[5] == "Family"){
 
-			var tablePage = '<div class ="card_fields" style="display: inline-block;"><label class ="label" for="local_explorer"> Upload Images </label><br><br><input class ="local_explorer" id="my-input" type="file" name="local_explorer" multiple="multiple" onchange="readFiles()"> <br> <label class ="label" onclick="addColumnAndRow'+pageTwo[5]+'()">Add ' + pageTwo[5] +' Section Tables (+)</label><br><br><div class = "tables" align="left"><table class="tg"><tr class = "columns'+pageTwo[5]+'"></tr><tr class = "rows'+pageTwo[5]+'"></tr></table></div><label class = "label" onclick="addColumnAndRowMenu()">Menu</label> <br> <div class = "tables" align="left"><table class="tgMenu" id="menuTable"><tr class = "columnsMenu"></tr><tr class = "rowsMenu"></tr></table></div></div>';
+			var tablePage = '<div class ="card_fields" style="display: inline-block;"><label class ="label" for="local_explorer"> Upload Images </label><br><br><input class ="local_explorer" id="my-input" type="file" name="local_explorer" multiple="multiple" onchange="readFiles()"> <br> <label class ="label" onclick="addColumnAndRow'+pageTwo[5]+'()">Add ' + pageTwo[5] +' Section Tables (+)</label><br><br><div class = "tables" align="left"><table class="tg"><tr class = "columns'+pageTwo[5]+'"></tr><tr class = "rows'+pageTwo[5]+'"></tr></table></div><label class = "label" onclick="addColumnAndRowMenu()">Add Menu (+)</label> <br> <div class = "tables" align="left"><table class="tgMenu" id="menuTable"><tr class = "columnsMenu"></tr><tr class = "rowsMenu"></tr></table></div></div>';
 
 			$(".card").prepend(tablePage);
+			$(".card").css("left", "0");
+			$(".card").css("width", "100%");
+			$(".card").css("margin-left", "0");
 
 			$(".main_body").css("height", "auto");
-			$(".card").css("width", "1200px");
-			$(".card").css("left", "50%");
-			$(".card").css("margin-left", "-600px");
-			$(".card").css("max-width", "1200px");
-			$(".card").css("min-width", "1200px");
 
 			$(".submitButton").unbind().click(function(){
 
@@ -381,30 +377,10 @@ function processRegistration(){
 
 					}else{
 
-						$(".card").remove();
-						$(".page_header").remove();
-
-						var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
-						$(".main_body").append(portal_page);
-						$(".main_body").css("height", "auto");
-						$(".image").width($(window).width());
-
-						pageCounter = 0;
 						showWait();
-
+						firebaseRecordsUpload();
 						// CHECK HERE FOR MENU STRUCTURE LOGIC
 						// console.log(categoryMenu);
-
-						var counter = 0;
-
-						var timer = setInterval(function(){
-							counter++;
-							if(counter == 2){
-								firebaseRecordsUpload();
-								clearInterval(timer);
-								deleteRecords();
-							}
-						}, 1000);
 
 					}
 
@@ -422,27 +398,8 @@ function processRegistration(){
 
 						// EDIT HERE
 
-						$(".card").remove();
-						$(".page_header").remove();
-
-						var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
-						$(".main_body").append(portal_page);
-						$(".main_body").css("height", "auto");
-						$(".image").width($(window).width());
-
-						pageCounter = 0;
 						showWait();
-
-						var counter = 0;
-
-						var timer = setInterval(function(){
-							counter++;
-							if(counter == 2){
-								firebaseRecordsUpload();
-								clearInterval(timer);
-								deleteRecords();
-							}
-						}, 1000);
+						firebaseRecordsUpload();
 
 					}
 				}
@@ -477,15 +434,13 @@ function processRegistration(){
 
 		}else{
 
-			var tablePage = '<div class ="card_fields" style="display: inline-block;"><label class ="label" for="local_explorer"> Upload Images </label><br><br><input class ="local_explorer" id="my-input" type="file" name="local_explorer" multiple="multiple" onchange="readFiles()"> <br><label class ="label" onclick="addColumnAndRowSingle()">Add Single Section Tables (+)</label><br><br><div class = "tablesSingle" align="left"><table class="tg"><tr class = "columnsSingle"></tr><tr class = "rowsSingle"></tr></table></div><label class ="label" onclick="addColumnAndRowFamily()">Add Family Section Tables (+)</label><br><br><div class = "tablesFamily" align="left"><table class="tg"><tr class = "columnsFamily"></tr><tr class = "rowsFamily"></tr></table></div><label class = "label" onclick="addColumnAndRowMenu()">Menu</label> <br> <div class = "tables" align="left"><table class="tgMenu" id="menuTable"><tr class = "columnsMenu"></tr><tr class = "rowsMenu"></tr></table></div></div>';
-			$(".card").prepend(tablePage);
+			var tablePage = '<div class ="card_fields" style="display: inline-block;"><label class ="label" for="local_explorer"> Upload Images </label><br><br><input class ="local_explorer" id="my-input" type="file" name="local_explorer" multiple="multiple" onchange="readFiles()"> <br><label class ="label" onclick="addColumnAndRowSingle()">Add Single Section Tables (+)</label><br><br><div class = "tablesSingle" align="left"><table class="tg"><tr class = "columnsSingle"></tr><tr class = "rowsSingle"></tr></table></div><label class ="label" onclick="addColumnAndRowFamily()">Add Family Section Tables (+)</label><br><br><div class = "tablesFamily" align="left"><table class="tg"><tr class = "columnsFamily"></tr><tr class = "rowsFamily"></tr></table></div><label class = "label" onclick="addColumnAndRowMenu()">Add Menu (+)</label> <br> <div class = "tables" align="left"><table class="tgMenu" id="menuTable"><tr class = "columnsMenu"></tr><tr class = "rowsMenu"></tr></table></div></div>';
 
 			$(".main_body").css("height", "auto");
-			$(".card").css("width", "1200px");
-			$(".card").css("left", "50%");
-			$(".card").css("margin-left", "-600px");
-			$(".card").css("max-width", "1200px");
-			$(".card").css("min-width", "1200px");
+			$(".card").prepend(tablePage);
+			$(".card").css("left", "0");
+			$(".card").css("width", "100%");
+			$(".card").css("margin-left", "0");
 
 			$(".submitButton").unbind().click(function(){
 
@@ -503,27 +458,8 @@ function processRegistration(){
 
 					// EDIT HERE
 
-					$(".card").remove();
-					$(".page_header").remove();
-
-					var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
-					$(".main_body").append(portal_page);
-					$(".main_body").css("height", "auto");
-					$(".image").width($(window).width());
-
-					pageCounter = 0;
 					showWait();
-
-					var counter = 0;
-
-						var timer = setInterval(function(){
-							counter++;
-							if(counter == 2){
-								firebaseRecordsUpload();
-								clearInterval(timer);
-								deleteRecords();
-							}
-						}, 1000);
+					firebaseRecordsUpload();
 
 				}
 
@@ -579,21 +515,13 @@ function goBack(){
 
 		}
 
-		$(".card_fields").remove();
-		$(".buttons").remove();
+		$(".card").remove();
+		$(".submission").remove();
 
-		var home_page = '<div class ="card_fields" style="display: flex;"><div class = "personal_info" align="left"><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."><label class = "label" for="input[name=email_address]">Email Address</label> <br><input class = "text_fields" type="text" name="email_address" placeholder="..."><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div><div class = "restaurant_info" align="left"><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div><div class ="submission" style="display: flex;"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div></div>';
-		$(".card").append(home_page);
+		var home_page = '<div class="card"><div class ="card_fields"><div class = "personal_info" align="left"><div><label class = "label" for="input[name=first_name]">First Name</label> <br> <input class = "text_fields" type="text" name="first_name" placeholder="..."></div><div><label class = "label" for="input[name=last_name]">Last Name</label> <br> <input class = "text_fields" type="text" name="last_name" placeholder="..."></div><div><label class = "label" for="input[name=phone_number]">Mobile Number</label> <br> <input class = "text_fields" type="number" name="phone_number" placeholder="..."></div><div><label class = "label" for="input[name=email_address]">Email Address</label> <br> <input class = "text_fields" type="text" name="email_address" placeholder="..."></div><div><label class = "label" for="input[name=password]">Password</label> <br> <input class = "text_fields" type="password" name="password" placeholder="..."></div></div><div class = "restaurant_info" align="left"><div><label class = "label" for="input[name=restaurant_name]">Restaurant Name</label> <br> <input class = "text_fields" type="text" name="restaurant_name" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_country]">Restaurant Country</label> <br> <input class = "text_fields" type="text" name="restaurant_country" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_city]">Restaurant City</label> <br> <input class = "text_fields" type="text" name="restaurant_city" placeholder="..."></div><div><label class = "label" for="input[name=restaurant_zip]">Restaurant Zipcode</label> <br> <input class = "text_fields" type="number" name="restaurant_zip" placeholder="..."></div><div><label class = "label" for="input[name=location]">Restaurant Location</label> <br> <input class = "text_fields" type="text" name="location" placeholder="..." onfocus="alertBox()"></div></div></div><div class ="submission" class = "submission"><button class ="backButton" onclick="goBack()"> Back </button><button class ="submitButton" onclick="storeAndProceed()"> Continue </button></div></div>';
+		$(".main_body").append(home_page);
 
 		$(".main_body").css("height", "1500px");
-		$(".card").css("width", "750px");
-		$(".card").css("margin-left", "-375px");
-		$(".card").css("left", "50%");
-		$(".card").css("max-width", "750px");
-		$(".card").css("min-width", "750px");
-
-		$(".submitButton").css("position", "absolute");
-		$(".submitButton").css("right", "50px");
 
 		$("input[name=first_name]").val(pageOne[0]);
 		$("input[name=last_name]").val(pageOne[1]);
@@ -605,6 +533,9 @@ function goBack(){
 		$("input[name=restaurant_city]").val(pageOne[7]);
 		$("input[name=restaurant_zip]").val(pageOne[8]);
 		$("input[name=location]").val(pageOne[9]);
+
+		$("input[name=restaurant_country]").prop("disabled", true);
+		$("input[name=restaurant_city]").prop("disabled", true);
 
 		$(".text_fields").unbind().keypress(function(e){
 				if(e.which == 13){
@@ -631,23 +562,21 @@ function goBack(){
 			menuCategoryCounter = 0;
 
 			$(".card_fields").remove();
-			$(".buttons").remove();
-
-			var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br><select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <input class = "text_fields" type="text" name="cuisine" placeholder="..."><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><input class = "text_fields" type="text" name="price_range" placeholder="..."><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="open_hour" placeholder="..."><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select><select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select><input class = "text_fields" type="text" name="close_hour" placeholder="..."><label class = "label" for="input[name=family]">Sections</label> <br> <input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "buttons" style="display: flex;"><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
-
+			$(".submission").remove();
+//<select class ="open_minute_select" onchange="setTextOpen()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select>
+//<select class="open_am_pm" onchange="setTextOpen()"><option value="am">AM</option><option value="pm">PM</option></select>
+			var continue_page = '<div class ="card_fields"><div class = "food_information" align="left"><label class = "label" for="input[name=cuisine]">Cuisine</label> <br> <select class="cuisine_select" onchange="setTextCuisine()"><option value="african">African</option><option value="american">American</option><option value="british">British</option><option value="caribbean">Caribbean</option><option value="chinese">Chinese</option><option value="east_european">East European</option><option value="french">French</option><option value="greek">Greek</option><option value="indian">Indian</option><option value="irish">Irish</option><option value="italian">Italian</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="mexican">Mexican</option><option value="nordic">Nordic</option><option value="north_african">North African</option><option value="pakistani">Pakistani</option><option value="portuguese">Portuguese</option><option value="south_american">South American</option><option value="spanish">Spanish</option><option value="thai_south_east_asia">Thai - South East Asia</option><option value="turkish">Turkish</option><option value="middle_eastern">Middle Eastern</option></select> <div><input class = "text_fields" type="text" name="cuisine" placeholder="..."></div><label class = "label" for="input[name=price_range]">Price Range</label> <br> <ul class="price_range_list"><li id="1">$</li><li id="2">$</li><li id="3">$</li><li id="4">$</li><li id="5">$</li></ul><div><input class = "text_fields" type="text" name="price_range" placeholder="..."></div><label class = "label" for="input[name=restaurant_phone_number]">Restaurant Phone Number</label> <br> <div><input class = "text_fields" type="number" name="restaurant_phone_number" placeholder="..."></div></div><div class = "availability_information" align="left"><label class = "label" for="input[name=open_hour]">Open Hour</label> <br> <select class="open_hour_select" onchange="setTextOpen()"><option value="zero">0</option><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><div><input class = "text_fields" type="text" name="open_hour" placeholder="..."></div><label class = "label" for="input[name=close_hour]">Close Hour</label> <br><select class="close_hour_select" onchange="setTextClose()"><option value="zero">0</option><option value="one">1</option><option value="two">2</option><option value="three">3</option><option value="four">4</option><option value="five">5</option><option value="six">6</option><option value="seven">7</option><option value="eight">8</option><option value="nine">9</option><option value="ten">10</option><option value="eleven">11</option><option value="twelve">12</option></select><div><input class = "text_fields" type="text" name="close_hour" placeholder="..."></div><label class = "label" for="input[name=family]">Sections</label> <br><input class ="sections" type="checkbox" name ="family">Family<input class ="sections" type="checkbox" name ="single">Single <br><br><br> </div><div class = "images"></div></div><div class = "submission" ><button class ="submitButton" onclick="storeAndProceed()"> Continue </button><button class ="backButton" onclick="goBack()"> Back </button></div>';
+//<select class ="close_minute_select" onchange="setTextClose()"><option value="zero">0</option><option value="five">5</option><option value="ten">10</option><option value="fifteen">15</option><option value="twenty">20</option><option value="twenty-five">25</option><option value="thirty">30</option><option value="thirty-five">35</option><option value="fourty">40</option><option value="fourty-five">45</option><option value="fifty">50</option><option value="fifty-five">55</option></select>
+//<select class="close_am_pm" onchange="setTextClose()"><option value="am">AM</option><option value="pm">PM</option></select>
 			$(".card").prepend(continue_page);
+
+			$(".card").css("left", "50%");
+			$(".card").css("width", "auto");
+			$(".card").css("margin-left", "-375px");
 
 			setPriceRangeListener();
 
 			$(".main_body").css("height", "1100px");
-			$(".card").css("width", "750px");
-			$(".card").css("left", "50%");
-			$(".card").css("margin-left", "-375px");
-			$(".card").css("max-width", "750px");
-			$(".card").css("min-width", "750px");
-
-			$(".submitButton").css("position", "absolute");
-			$(".submitButton").css("right", "50px");
 
 			$(".submitButton").removeAttr("onclick");
 			$(".submitButton").attr("onclick", "processRegistration()")
@@ -750,9 +679,6 @@ function goBack(){
 		$(".main_body").css("height", "auto");
 		$(".image").width($(window).width());
 
-		$(".submitButton").css("position", "absolute");
-		$(".submitButton").css("right", "50px");
-
 	}else{
 
 		$(".container").remove();
@@ -760,9 +686,6 @@ function goBack(){
 		$(".main_body").append(portal_page);
 		$(".main_body").css("height", "auto");
 		$(".image").width($(window).width());
-
-		$(".submitButton").css("position", "absolute");
-		$(".submitButton").css("right", "50px");
 
 		pageCounter = 1;
 
@@ -781,8 +704,8 @@ function setTextOpen(){
 	}else{
 		minute = $(".open_minute_select").find(":selected").text();
 	}
-
-	$("input[name=open_hour]").val($('.open_hour_select').find(":selected").text() + ":" + minute + " " + $('.open_am_pm').find(":selected").text());
+$("input[name=open_hour]").val($('.open_hour_select').find(":selected").text() + ":" + minute + " " + $('.open_am_pm').find(":selected").text());
+	// $("input[name=open_hour]").val($('.open_hour_select').find(":selected").text() + ":00");
 }
 
 // CLOSE HOUR LISTENER
@@ -796,8 +719,8 @@ function setTextClose(){
 	}else{
 		minute = $(".close_minute_select").find(":selected").text();
 	}
-
-	$("input[name=close_hour]").val($('.close_hour_select').find(":selected").text() + ":" + minute + " " + $('.close_am_pm').find(":selected").text());
+$("input[name=close_hour]").val($('.close_hour_select').find(":selected").text() + ":" + minute + " " + $('.close_am_pm').find(":selected").text());
+	// $("input[name=close_hour]").val($('.close_hour_select').find(":selected").text() + ":00");
 }
 
 // PRICE RANGE (DOLLAR) LISTENER
@@ -855,7 +778,7 @@ function setPriceRangeListener(){
 // ADD TABLE COLUMNS AND ROWS FOR SINGLE SECTION
 function addColumnAndRowSingle(){
 
-	if(tableCounterSingle > 24){
+	if(tableCounterSingle > 35){
 
 		alert("Maximum Capacity Reached.");
 
@@ -875,7 +798,7 @@ function addColumnAndRowSingle(){
 
 			let tableCountSingle = prompt("How many of this table do you want to add?");
 
-			if(tableCountSingle > 35){
+			if(tableCountSingle > 35 || (Number(tableCounterSingle)+Number(tableCountSingle)) > 35){
 
 				alert("Maximum capacity is 35");
 
@@ -926,8 +849,8 @@ function addColumnAndRowFamily(){
 		}else{
 
 			let tableCountFamily = prompt("How many of this table do you want to add?");
-
-			if(tableCountFamily > 35){
+			
+			if(tableCountFamily > 35 || (Number(tableCountFamily)+Number(tableCounterFamily)) > 35){
 
 				alert("Maximum capacity is 35");
 
@@ -999,10 +922,11 @@ function insertMenuItems(menuCategoryCounter){
 	$(".add").unbind().click(function(){
 
 		var menuImage = $('input[name=menu_image_explorer]').prop('files')[0];
-		//console.log(menuImage);
+		// console.log(menuImage.type);
 
 		if(($("input[name=food_name]").val() != "" && $("input[name=food_description]").val() != "" && $("input[name=food_price]").val() != "") && 
-			(hasNumber($("input[name=food_name]").val()) == -1 && hasNumber($("input[name=food_description]").val()) == -1 && hasString(String($("input[name=food_price]").val())) != 0)){
+			(hasNumber($("input[name=food_name]").val()) == -1 && hasNumber($("input[name=food_description]").val()) == -1 && hasString(String($("input[name=food_price]").val())) != 0) &&
+			(menuImage.type == "image/jpeg" || menuImage.type == "image/png" || menuImage.type == "image/jpg" || menuImage.type == "image/pdf")){
 		
 		// IF THIS IS NOT THE FIRST ATTEMPT TO ADD (INSERT FUNCTION CALLED REPETITIVELY)
 		if(i >= 1){
@@ -1111,7 +1035,7 @@ function insertMenuItems(menuCategoryCounter){
 
 	}else{
 
-		alert("Food name and description only accepts letters. Food price only takes in numbers");
+		alert("Food name and description only accept letters. Food price only takes in numbers. Image only accepts JPEG, JPG, PNG.");
 
 	}
 
@@ -1166,6 +1090,16 @@ function accountLogin(){
 // READ LOCAL FILES
 function readFiles(){
 	files = document.getElementById("my-input").files;
+	for(i = 0; i < files.length; i++){
+		if(String(files[i].type) === "image/jpeg" || String(files[i].type) === "image/png" || String(files[i].type) === "image/jpg" || String(files[i].type) === "image/pdf"){
+			// DO NOTHING
+		}else{
+			alert("Incorrect file extensions. Please only provide JPG, JPEG, PNG or PDF files");
+			files = [];
+			$("input[name=local_explorer]").prop("value", "");
+			break;
+		}
+	}
 }
 
 // SET CUISINE TEXT
@@ -1193,6 +1127,7 @@ function hasString(myString){
 
 // START WAITING ANIMATION
 function showWait(){
+	$(".card").append('<div class="lds-dual-ring"></div>');
 	$(".lds-dual-ring").css("display", "inline-block");
 }
 
@@ -1210,45 +1145,60 @@ function alertBox(){
 // UPLOAD REGISTRATION TO FIREBASE
 function firebaseRecordsUpload(){
 
-	var filesList = [];
+	var keyOriginal = "";
 
-	// STORING NAMES ONLY
-	for(i = 0; i < files.length; i++){
-		filesList.push(files[i].name);
-	}
+	firebase.auth().createUserWithEmailAndPassword(pageOne[3], pageOne[4])
+	.then(function success(userCredential){
+        var userData = userCredential.user;
+        var uid = userData.uid;
+        keyOriginal = uid;
+        // console.log(keyOriginal);
 
-	const person = new Person(pageOne[0], pageOne[1], pageOne[2], pageOne[3]);
+        // write values to database
+ 		var databaseRef = firebase.database().ref().child('QueueList').child(String(keyOriginal));
 
-	// USING IMAGE NAMES FOR THE RESTAURANT NODE IN FIREBASE
-	const restaurant = new Restaurant(person, pageOne[5], pageOne[6], pageOne[7],
+ 		var filesList = [];
+
+		// STORING NAMES ONLY
+		for(i = 0; i < files.length; i++){
+			filesList.push(files[i].name);
+		}
+
+ 		const person = new Person(pageOne[0], pageOne[1], pageOne[2], pageOne[3]);
+
+		// USING IMAGE NAMES FOR THE RESTAURANT NODE IN FIREBASE
+		const restaurant = new Restaurant(keyOriginal, person, pageOne[5], pageOne[6], pageOne[7],
  		pageOne[8], pageOne[9], pageTwo[0], pageTwo[1], pageTwo[2], pageTwo[3], pageTwo[4], pageTwo[5],
  		tableListS, tableListF, categoryMenu, filesList);
 
- 	// write values to database
+		databaseRef.set(restaurant);
 
- 	var key = "";
- 	var databaseRef = firebase.database().ref().child('QueueList');
+		filesAndStorage(keyOriginal, databaseRef);
 
-	databaseRef.push(restaurant);
+  	//Here if you want you can sign in the user
+	}).catch(function(error) {
+    	alert(error.message);
+    	cancelWait();
+	});
 
-	var taskDatabase = databaseRef.endAt().limitToLast(1).on('child_added', function(snapshot){
-		key = snapshot.key;
-	}, function(err){
-		alert("Registration Failed. Please check your internet connection.");
-	}
-	);
- 	
+}
+
+function filesAndStorage(keyOriginal, databaseRef){
+
+	var keyOriginal = keyOriginal;
+	var databaseRef = databaseRef;
+
  	// STORING GALLERY IMAGES BASED ON USER REGISTRATION KEY GENERATED ABOVE
  	for(j = 0; j < files.length; j++){
 
  		// THE IMAGES ARE STORED INTO A FOLDER WITH THE REGISTERED KEY
-		var storageRef = firebase.storage().ref(String(key)+'/galleryImages/'+files[j].name);
+		var storageRef = firebase.storage().ref(String(keyOriginal)+'/galleryImages/'+files[j].name);
   		var task = storageRef.put(files[j]);
 
   		task.then(function(snapshot){
   			snapshot.ref.getDownloadURL().then(function(downloadURL) {
     			imageUrls.push(downloadURL);
-    			databaseRef.child(String(key)).child('imageList').set(imageUrls);
+    			databaseRef.child('imageList').set(imageUrls);
   			});
   		});
   	}
@@ -1260,7 +1210,7 @@ function firebaseRecordsUpload(){
 
   		for(j = 0; j < list.length; j++){
 
-  			var storageRef = firebase.storage().ref(String(key) + '/menuImages/' + String(i) + String(j) + "_MOA19" + list[j].file.name);
+  			var storageRef = firebase.storage().ref(String(keyOriginal) + '/menuImages/' + String(i) + String(j) + "_MOA19" + list[j].file.name);
   			var task = storageRef.put(list[j].file);
 
   			task.then(function(snapshot){
@@ -1272,24 +1222,41 @@ function firebaseRecordsUpload(){
   					// console.log(String(downloadURL).charAt(endIndex));
   					// console.log(String(downloadURL).charAt(startIndex));
 
-  					databaseRef.child(String(key)).child('menuItems')
+  					databaseRef.child('menuItems')
   					.child(String(downloadURL).charAt(startIndex))
   					.child('menuItems')
   					.child(String(downloadURL).charAt(endIndex))
   					.child("image")
   					.set(String(downloadURL));
 
+  					databaseRef.child("firebase_id").set(keyOriginal);
+  					
   				});
   			});
   		}
   	}
+
   	imageUrls = [];
 
   	var dbRef = firebase.database().ref().child('QueueList');
   	dbRef.once('value', function(snapshot) {
-  	if (snapshot.hasChild(String(key))) {
+  	if (snapshot.hasChild(String(keyOriginal))) {
+
+  		deleteRecords();
+	
+		$(".card").remove();
+		$(".page_header").remove();
+
+		var portal_page = '<div class="container"><div class="dummyDiv"><div class ="submission"><button class ="loginButton" onclick="loginPage()"> Login </button><button class ="signupButton" id="test" onclick="signupPage()"> Signup </button></div></div>';
+		$(".main_body").append(portal_page);
+		$(".main_body").css("height", "auto");
+		$(".image").width($(window).width());
+
   		cancelWait();
+
     	alert("Please wait for confirmation email. An email will be sent to the email you registered within a few days. You will not be able to login until then.");
+
+    	pageCounter = 0;
   	}
 	});
 }
