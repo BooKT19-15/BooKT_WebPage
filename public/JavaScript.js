@@ -148,13 +148,17 @@ function storeAndProceed(){
 	if(String($("input[name=first_name]").val()) == "" || 
 		String($("input[name=last_name]").val()) == "" ||
 		String($("input[name=phone_number]").val()) == "" ||
+		!String($("input[name=phone_number]").val()).startsWith("05") ||
 		String($("input[name=email_address]").val()) == "" || 
 		String($("input[name=password]").val()) == "" ||
 		String($("input[name=restaurant_name]").val()) == "" ||
 		String($("input[name=restaurant_country]").val()) == "" ||
 		String($("input[name=restaurant_city]").val()) == "" ||
 		String($("input[name=restaurant_zip]").val()) == "" ||
-		String($("input[name=location]").val()) == ""){
+		String($("input[name=location]").val()) == "" ||
+		String($("input[name=restaurant_zip]").val().length) > 10 ||
+		String($("input[name=phone_number]").val().length) > 10 ||
+		validURL(String($("input[name=location]").val())) == false){
 
 		$(".text_fields").css("animation-name", "shake");
         $(".text_fields").css("animation-duration", "0.5s, 0.35s");
@@ -164,13 +168,16 @@ function storeAndProceed(){
           $(".text_fields").css("animation", "none");
         }, 500);
 
+        alert("Please fill out empty fields. Mobile number cannot exceed 10 digits and must start with 05. Restaurant location should be a valid google maps url. Zipcode cannot exceed 10 digits.")
+
 	} else {
 
 		if(hasNumber($("input[name=first_name]").val()) == -1 &&
 			hasNumber($("input[name=last_name]").val()) == -1 &&
 			hasNumber($("input[name=restaurant_name]").val()) == -1 &&
 			hasNumber($("input[name=restaurant_country]").val()) == -1 &&
-			hasNumber($("input[name=restaurant_city]").val()) == -1){
+			hasNumber($("input[name=restaurant_city]").val()) == -1
+			){
 
 		pageCounter = 2;
 
@@ -286,7 +293,7 @@ function storeAndProceed(){
 		}
 	}else{
 
-		alert("Some fields only accept letters. Others only accept numbers.");
+		alert("Some fields only accept letters. Others only accept numbers. Zipcode should not exceed 10 digits long.");
 
 	}
 
@@ -303,7 +310,10 @@ function processRegistration(){
 		String($("input[name=open_hour]").val()) == "" ||
 		String($("input[name=close_hour]").val()) == "" ||
 		(!$("input:checkbox[name=family]").is(":checked") && !$("input:checkbox[name=single]").is(":checked")) ||
-		String($("input[name=seat_max]").val()) == ""){
+		String($("input[name=seat_max]").val()) == "" || String($("input[name=restaurant_phone_number]").val().length) > 10 ||
+		!String($("input[name=restaurant_phone_number]").val()).startsWith("05") ||
+		Number($("input[name=open_hour]").val().substring(0, $("input[name=open_hour]").val().indexOf(":"))) >
+		Number($("input[name=close_hour]").val().substring(0, $("input[name=close_hour]").val().indexOf(":")))){
 
 		$(".text_fields").css("animation-name", "shake");
         $(".text_fields").css("animation-duration", "0.5s, 0.35s");
@@ -318,6 +328,8 @@ function processRegistration(){
           $(".text_fields").css("animation", "none");
           $(".seat_field").css("animation", "none");
         }, 500);
+
+        alert("Please fill out empty fields. Phone number cannot exceed 10 digits and must start with 05. Open hour cannot be greater than close hour.");
 
 	}else{
 
@@ -1111,6 +1123,27 @@ function setTextCuisine(){
 function hasNumber(myString){
 	var regex = /[^a-zA-Z\s]/;
 	return myString.search(regex);
+}
+
+// CHECK GOOGLE MAPS URL
+function validURL(myString){
+	for(i = 0; i < myString.length; i++){
+		if(myString.charAt(i) == '@' && myString.charAt(i-1) == '/'){
+			for(j = i; j < myString.length; j++){
+				if(myString.charAt(j) == '.'){
+					for(k = j; k < myString.length; k++){
+						if(myString.charAt(k) == ','){
+							if(/[0-9]/.test(myString.charAt(k+1))){
+								return true;
+								break;
+							}
+						}	
+					}
+				}
+			}
+		}
+	}
+	return  false;
 }
 
 // CHECK FOR STRING IN NUMBER
